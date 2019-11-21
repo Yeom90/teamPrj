@@ -26,6 +26,12 @@
       ]]>
     </select>
     
+    <select id="idcheck" resultType="Integer">
+    	<![CDATA[
+    		SELECT COUNT(*) FROM userTest WHERE ID = #{id_input}
+    	]]>
+    </select>
+    
     <insert id="register">
         <![CDATA[
             INSERT INTO userTest

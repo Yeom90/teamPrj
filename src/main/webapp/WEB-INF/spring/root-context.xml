@@ -14,7 +14,8 @@
 			value="jdbc:mysql://192.168.0.128:3306/pororiTest?serverTimezone=Asia/Seoul&amp;characterEncoding=utf8&amp;useSSL=false"/>
 		<property name="username" value="porori"/>
 		<property name="password" value="1234"/>
-		<property name="maximumPoolSize" value="50"/>
+		<property name="minimumIdle" value="5"/>
+		<property name="maximumPoolSize" value="20"/>
 		<property name="maxLifetime" value="600000"/>
 		<property name="connectionTimeout" value="60000"/>
 	</bean>

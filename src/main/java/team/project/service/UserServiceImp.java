@@ -29,4 +29,5 @@ public class UserServiceImp implements UserService{
 		userDAO.insertUser(regReq);
 	}
 	
+	
 }

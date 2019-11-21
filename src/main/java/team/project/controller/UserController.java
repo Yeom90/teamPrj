@@ -26,27 +26,25 @@ public class UserController {
 		return "index";
 	}
 	
-	@RequestMapping("/register/step1")
-	public String step1() throws Exception{
-		return "/register/step1";
-	}
-	@RequestMapping("/register/step2")
-	public ModelAndView step2(@RequestParam(value="agree", defaultValue="false") Boolean agree) {
-		if(!agree) {
-			ModelAndView mv = new ModelAndView("/register/step1");
-			return mv;
-		}
-		ModelAndView mv = new ModelAndView("/register/step2");
+	@RequestMapping(value = "/register/step2", method = RequestMethod.GET)
+	public ModelAndView signUp() {
+		ModelAndView mv = new ModelAndView("/register/signUp");
 		mv.addObject("registerRequest", new RegisterRequest());
 		return mv;
 	}
-	@RequestMapping("/register/step3")
-	public ModelAndView step3(RegisterRequest regReq, Errors errors) throws Exception{
+
+	@RequestMapping(value = "/register/step2", method = RequestMethod.POST)
+	public ModelAndView check(@RequestParam(value="agree", defaultValue="false") Boolean agree, RegisterRequest regReq, Errors errors) throws Exception{
 		new RegisterRequestValidator().validate(regReq, errors);
 		ModelAndView mv = new ModelAndView();
 		
+		if(!agree) {
+			mv = new ModelAndView("/register/signUp");
+			return mv;
+		}
+		
 		if(errors.hasErrors()) {
-			mv.setViewName("/register/step2");
+			mv.setViewName("/register/signUp");
 			return mv;
 		}
 		
@@ -55,15 +53,15 @@ public class UserController {
 			
 		}catch(AlreadyExistingEmailException e) {
 			errors.rejectValue("email", "duplicate", "이미 가입된 이메일 입니다.");
-			mv.setViewName("/register/step2");
+			mv.setViewName("/register/signUp");
 			return mv;
 			
 		}catch(AlreadyExistingIdException e) {
 			errors.rejectValue("id", "duplicate", "이미 가입된 아이디 입니다.");
-			mv.setViewName("/register/step2");
+			mv.setViewName("/register/signUp");
 			return mv;
 		}
-		mv.setViewName("/register/step3");
+		mv.setViewName("/register/signOk");
 		return mv;
 	}
 	
