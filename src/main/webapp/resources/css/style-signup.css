@@ -82,3 +82,6 @@ b {
     background: #367fa9;
     color: #ffff;
 }
+.form-control{
+	width: 200px;
+}

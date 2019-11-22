@@ -24,17 +24,20 @@
                 <div class="form-group has-feedback">
                     <form:input type="text" class="form-control" placeholder="ID" path="id"/>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    <div class="check_font" id="id_check"></div>
+                    <input type="button" class="btn btn-danger" onclick="idcheck()" value="중복체크"/>
                     <form:errors path="id" class="signup-errors"/>
                 </div>
                 <div class="form-group has-feedback">
-                    <form:input type="password" class="form-control" placeholder="PASSWORD" path="pw"/>
+                    <form:input type="password" class="form-control" placeholder="PASSWORD" 
+                    	path="pw" onkeyup="checkpw()"/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <form:errors path="pw" class="signup-errors"/>
                 </div>
                 <div class="form-group has-feedback">
-                    <form:input type="password" class="form-control" placeholder="Retype PASSWORD" path="checkPw"/>
+                    <form:input type="password" class="form-control" placeholder="Retype PASSWORD" 
+                    	path="checkPw" onkeyup="checkpw2()"/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <div class="signup-errors" id="pw_check"></div>
                     <form:errors path="checkPw" class="signup-errors"/>
                 </div>
                 <div class="form-group has-feedback">
@@ -47,21 +50,20 @@
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     <form:errors path="email" class="signup-errors"/>
                 </div> --%>
-                <div class="form-row">
+                <div class="form-group has-feedback">
                 
-                    <form:input type="text" placeholder="EMAIL" path="email"/>
-                    <input type="text" id="email2" disabled value="@gmail.com"/>
-         
+                    <form:input type="text" placeholder="EMAIL" path="email"/>@
+                    <input type="text" id="email2" disabled value="gmail.com"/>
                     <select id="domain">
-                    	<option value="@gmail.com">@gmail.com</option>
-                    	<option value="@naver.com">@naver.com</option>
-                    	<option value="@daum.net">@daum.com</option>
+                    	<option value="@gmail.com">gmail.com</option>
+                    	<option value="@naver.com">naver.com</option>
+                    	<option value="@daum.net">daum.net</option>
                     	<option value="custom">직접입력</option>
                     </select>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     <form:errors path="email" class="signup-errors"/>
                     
-                </div><br/>
+                </div>
                 
                 <div class="form-group has-feedback">
                 <input type="text" id="datepicker" placeholder="BIRTHDAY" class="form-control" readonly/>
@@ -83,6 +85,7 @@
                 </div>
                 
                 <%@ include file="/WEB-INF/views/include/yakguan.jsp"%>
+                <form:errors path="agree" class="signup-errors"/>
                 <div class="row">
                     <div class="col-xs-8">
                     </div>
@@ -91,12 +94,70 @@
                         <button type="submit" class="btn btn-danger">취소</button>
                     </div>
                 </div>
-                
- 				
             </form:form>
                
         </div>
          
+<script>
+	//id 중복체크
+	function idcheck(){
+		
+	}
+	//비밀번호 체크
+	function checkpw(){
+		var pw = $('#pw').val();
+		var pw2 = $('#checkPw').val();
+		if(pw==pw2){
+			$('#pw_check').empty();
+		}
+	}
+	function checkpw2(){
+		var pw = $('#pw').val();
+		var pw2 = $('#checkPw').val();
+		if(pw==pw2){
+			$('#pw_check').empty();
+		}else{
+			$('#pw_check').html("비밀번호가 일치하지 않습니다.");
+		}
+	}
+	
+	//email 선택
+ 	$('#domain').change(function () {
+		$('#domain option:selected').each(function(){
+			if($(this).val()=='custom'){
+				$('#email2').val('');
+				$('#email2').attr('disabled', false);
+			}else{
+				$('#email2').val($(this).text());
+				$('#email2').attr("disabled", true);
+			}
+		})
+	})
+	
+	//달력
+	$(function() {
+      $("#datepicker").datepicker({
+          dateFormat:'yy-mm-dd',
+          monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+          dayNamesMin:['일','월','화','수','목','금','토'],
+          changeMonth:true, // 월변경가능
+          changeYear:true,  // 년변경가능
+          showMonthAfterYear:true, // 년 뒤에 월표시
+          maxDate:"-1d"
+      });
+     });
+	
+	function validate(){
+		//email 결합
+		var email = $('#email').val();
+		email += '@' + $('#email2').val();
+		alert(email);
+		$('#email').val(email);
+	}
+	
+ 	
+</script>
+
 <script>
 	var element_wrap = document.getElementById('wrap');
 	//var element_wrap = $('#wrap');
@@ -208,50 +269,21 @@
 		element_wrap.style.display = 'block';
 	}
 </script>
+<!-- create database pororiTest;
+drop table if exists userTest;
+create table userTest(
+	IDX int(11) not null auto_increment,
+    ID varchar(45) not null,
+    EMAIL varchar(100) not null,
+    NAME varchar(45) not null,
+    PASSWORD varchar(45) not null,
+    GRADE int(11) default 0,
+    REGDATE timestamp not null default current_timestamp on update current_timestamp,
+    primary key(idx),
+    unique key EMAIL_UNIQUE (EMAIL),
+    unique key ID_UNIQUE (ID)
+    ); -->
 
-<script>
-	var email;
-	var emailDomain;
-	
-	//id체크
-	
-	
-	//email
- 	$('#domain').change(function () {
- 		email = $('#email').val();
- 		emailDomain = $('#email2').val();
- 		
-		$('#domain option:selected').each(function(){
-			if($(this).val()=='custom'){
-				$('#email2').val('');
-				$('#email2').attr('disabled', false);
-				email += $('#email2').val();
-				alert(email);
-			}else{
-				$('#email2').val($(this).text());
-				$('#email2').attr("disabled", true);
-				email = $('#email').val()+$('#email2').val();
-				$('#email').val(email);
-				alert(email);
-			}
-		})
-	})
-	
-	//달력
-	$(function() {
-      $("#datepicker").datepicker({
-          dateFormat:'ymmdd',
-          monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-          dayNamesMin:['일','월','화','수','목','금','토'],
-          changeMonth:true, // 월변경가능
-          changeYear:true,  // 년변경가능
-          showMonthAfterYear:true, // 년 뒤에 월표시
-          maxDate:"-1d"
-      });
-     });
-	
- 	
-</script>
 
 </body>
 </html>

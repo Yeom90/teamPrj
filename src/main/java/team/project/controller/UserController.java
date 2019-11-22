@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import team.project.exception.AlreadyExistingEmailException;
@@ -40,6 +41,7 @@ public class UserController {
 		
 		if(!agree) {
 			mv = new ModelAndView("/register/signUp");
+			errors.rejectValue("agree", "disagree", "약관 동의가 필요합니다.");
 			return mv;
 		}
 		
@@ -64,5 +66,12 @@ public class UserController {
 		mv.setViewName("/register/signOk");
 		return mv;
 	}
+	//id 중복 체크
+//	@RequestMapping(value="/idcheck", method=RequestMethod.GET)
+//	@ResponseBody
+//	public ModelAndView idcheck(@RequestParam("id")String id, Errors errors)throws Exception {
+//		new RegisterRequestValidator().validate(id, errors);
+//		return 
+//	}
 	
 }

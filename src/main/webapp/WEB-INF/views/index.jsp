@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file="/WEB-INF/include/header.jspf"%>
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
 </head>
 <body>
 	<h1>index</h1>

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/include/header.jspf"%>
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

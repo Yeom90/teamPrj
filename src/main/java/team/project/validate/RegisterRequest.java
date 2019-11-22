@@ -6,6 +6,7 @@ public class RegisterRequest {
 	private String name;
 	private String pw;
 	private String checkPw;
+	private String agree;
 	
 	public boolean isPwEqualToCheckPw() {
 		return pw.equals(checkPw);
@@ -49,5 +50,13 @@ public class RegisterRequest {
 
 	public void setCheckPw(String checkPw) {
 		this.checkPw = checkPw;
+	}
+
+	public String getAgree() {
+		return agree;
+	}
+
+	public void setAgree(String agree) {
+		this.agree = agree;
 	}
 }
