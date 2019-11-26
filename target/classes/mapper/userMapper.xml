@@ -28,7 +28,7 @@
     
     <select id="idcheck" resultType="Integer">
     	<![CDATA[
-    		SELECT COUNT(*) FROM userTest WHERE ID = #{id_input}
+    		SELECT COUNT(*) FROM userTest WHERE ID = #{id}
     	]]>
     </select>
     
@@ -40,6 +40,11 @@
                 ID,
                 NAME,
                 PASSWORD,
+                BIRTH,
+                POSTCODE,
+                ADDRESS,
+                detailAddress,
+                extraAddress,
                 REGDATE
             )
             VALUES
@@ -48,6 +53,11 @@
                 #{id},
                 #{name},
                 #{pw},
+                #{birth},
+                #{postcode},
+                #{address},
+                #{detailAddress},
+                #{extraAddress},
                 SYSDATE()
             )
         ]]>

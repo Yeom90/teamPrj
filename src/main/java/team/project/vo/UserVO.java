@@ -9,7 +9,11 @@ public class UserVO {
 	private String email;
 	private String name;
 	private String password;
-	private int grade;
+	private String birth;
+	private String postcode;
+	private String address;
+	private String detailAddress;
+	private String extraAddress;
 	private Date regdate;
 	
 	public int getIdx() {
@@ -42,11 +46,35 @@ public class UserVO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getGrade() {
-		return grade;
+	public String getBirth() {
+		return birth;
 	}
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	public String getExtraAddress() {
+		return extraAddress;
+	}
+	public void setExtraAddress(String extraAddress) {
+		this.extraAddress = extraAddress;
 	}
 	public Date getRegdate() {
 		return regdate;

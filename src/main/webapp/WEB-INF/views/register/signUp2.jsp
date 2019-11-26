@@ -19,78 +19,63 @@
 	<div class="signup-box-body">
             <p class="box-msg">Register a new membership</p>
 
-            <!-- 가입 폼 양식 -->
-            <form:form role="form" name="registerForm" modelAttribute="registerRequest" action="${pageContext.request.contextPath }/register/step2" 
-            	method="post" onsubmit="return validate()">
-                
-                <!-- 아이디 -->
+            <form:form role="form" commandName="registerRequest"  
+            	method="post">
                 <div class="form-group has-feedback">
-                    <form:input type="text" class="form-control" placeholder="아이디는 4~12자의 영문 대소문자와 숫자로만 입력" 
-                    	path="id" style="float:left"/>
+                    <form:input type="text" class="form-control" placeholder="ID" path="id"/>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    <input type="button" class="btn btn-danger" onclick="idcheck()" value="중복체크"/><br/>
-                    <span id="idChecked" style="display:none"></span>
-                    <form:errors path="id" id="idError" class="signup-errors"/>
+                    <input type="submit" class="btn btn-danger" formaction="${pageContext.request.contextPath }/register/idcheck" value="가입"/>
+                    <form:errors path="id" class="signup-errors"/>
                 </div>
-                
-                <!-- 비밀번호 -->
                 <div class="form-group has-feedback">
-                    <form:input type="password" class="form-control" placeholder="영문자,숫자,특수문자를 하나이상 포함하여 8~16자" 
+                    <form:input type="password" class="form-control" placeholder="PASSWORD" 
                     	path="pw" onkeyup="checkpw()"/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    <div class="signup-errors" id="pw_rule_check"></div>
-                    <form:errors path="pw" id="pwError" class="signup-errors"/>
+                    <form:errors path="pw" class="signup-errors"/>
                 </div>
-                
-                <!-- 비밀번호 확인 -->
                 <div class="form-group has-feedback">
-                    <form:input type="password" class="form-control" placeholder="비밀번호 확인" 
+                    <form:input type="password" class="form-control" placeholder="Retype PASSWORD" 
                     	path="checkPw" onkeyup="checkpw2()"/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="signup-errors" id="pw_check"></div>
-                    <form:errors path="checkPw" id="checkPwError" class="signup-errors"/>
+                    <form:errors path="checkPw" class="signup-errors"/>
                 </div>
-                
-                <!-- 이름 -->
                 <div class="form-group has-feedback">
-                    <form:input type="text" class="form-control" placeholder="이름" path="name"/>
+                    <form:input type="text" class="form-control" placeholder="NAME" path="name"/>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    <form:errors path="name" id="nameError" class="signup-errors"/>
+                    <form:errors path="name" class="signup-errors"/>
                 </div>
-                
-                <!-- 이메일 -->
+                <%-- <div class="form-group has-feedback">
+                    <form:input type="email" class="form-control" placeholder="EMAIL" path="email"/>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <form:errors path="email" class="signup-errors"/>
+                </div> --%>
                 <div class="form-group has-feedback">
-                    <input type="text" placeholder="EMAIL" id="emailId" class="form-control" style="float:left"/>
-                    <input type="text" id="emailDomain" value="@gmail.com" class="form-control" style="float:left" disabled/>
-                    <select id="domain" class="form-control" style="width:20%">
-                    	<option value="@gmail.com">Gmail</option>
-                    	<option value="@naver.com">Naver</option>
-                    	<option value="@daum.net">Daum</option>
+                
+                    <form:input type="text" placeholder="EMAIL" path="email"/>@
+                    <input type="text" id="email2" disabled value="gmail.com"/>
+                    <select id="domain">
+                    	<option value="gmail.com">gmail.com</option>
+                    	<option value="naver.com">naver.com</option>
+                    	<option value="daum.net">daum.net</option>
                     	<option value="custom">직접입력</option>
                     </select>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    <form:errors path="email" id="emailError" class="signup-errors"/>
-                    <form:hidden path="email"/>
+                    <form:errors path="email" class="signup-errors"/>
+                    
                 </div>
                 
-                <!-- 생일 -->
                 <div class="form-group has-feedback">
-                <input type="text" name="birth" id="datepicker" placeholder="생년월일 (클릭)" class="form-control" readonly/>
+                <input type="text" id="datepicker" placeholder="BIRTHDAY" class="form-control" readonly/>
                 <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                <form:errors path="birth" id="birthError" class="signup-errors"/>
                 </div>
                 
-                <!-- 주소(카카오API) -->
                 <div class="form-group has-feedback">
-                	<input type="text" id="postcode" name="postcode" placeholder="우편번호" class="form-control" style="float:left">
-                	<input type="button" id="postBtn" onclick="execDaumPostcode()" value="우편번호 찾기" class="btn btn-danger">
-                	<br/>
-                	<form:errors path="postcode" id="postcodeError" class="signup-errors"/>
-                	<input type="text" id="address" name="address" placeholder="주소" class="form-control">
-                	<form:errors path="address" id="addrError" class="signup-errors"/>
-                	<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" class="form-control">
-                	<form:errors path="detailAddress" id="detailAddrError" class="signup-errors"/>
-                	<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목" class="form-control">
+                	<input type="text" id="postcode" placeholder="우편번호">
+                	<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br/>
+                	<input type="text" id="address" placeholder="주소"><br/>
+                	<input type="text" id="detailAddress" placeholder="상세주소">
+                	<input type="text" id="extraAddress" placeholder="참고항목">
                 	<span class="glyphicon glyphicon-home form-control-feedback"></span>
                 	<div id="wrap" style='display:none; border:1px solid; width:500px; height:300px; margin:5px 0; position:relative'>
                 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
@@ -99,15 +84,15 @@
                 	<div id="map" style="width:300px; height:300px; margin-top:10px; display:none"></div>
                 </div>
                 
-                <!-- 이용약관 -->
                 <%@ include file="/WEB-INF/views/include/yakguan.jsp"%>
-                <form:errors path="agree" id="agreeError" class="signup-errors"/>
+                <form:errors path="agree" class="signup-errors"/>
                 <div class="row">
                     <div class="col-xs-8">
                     </div>
                     <div class="col-xs-3">
-                        <button type="submit" class="btn btn-style">가입</button>
-                        <a class="btn btn-danger" href="${pageContext.request.contextPath }">취소</a>
+                        <input type="submit" formaction="${pageContext.request.contextPath }/register/step2" value="가입" 
+                        	onsubmit="return validate()" class="btn btn-style">
+                        <button type="submit" class="btn btn-danger">취소</button>
                     </div>
                 </div>
             </form:form>
@@ -115,112 +100,40 @@
         </div>
          
 <script>
-	//전역 변수
-	//아이디 중복체크 여부
-	var isIdChecked = false;
-	
-	//에러 메시지 지우는 이벤트
 	$('#id').focus(function () {
-		$('#idError').remove();
+		//alert("1");
+		$("span").remove();
 	});
-	$('#pw').focus(function () {
-		$('#pwError').remove();
-	});
-	$('#checkPw').focus(function () {
-		$('#checkPwError').remove();
-	});
-	$('#name').focus(function () {
-		$('#nameError').remove();
-	});
-	$('#emailId,#domain').focus(function () {
-		$('#emailError').remove();
-	});
-	$("#datepicker").click(function () {
-		$('#birthError').remove();
-	});
-	$('#postBtn').click(function () {
-		$('#postcodeError,#addrError').remove();
-	});
-	$('#detailAddress').focus(function () {
-		$('#detailAddrError').remove();
-	});
-	$('#agree').click(function () {
-		$('#agreeError').remove();
-	});
-	
+		
 	//id 중복체크
 	function idcheck(){
 		var id = $("#id").val();
+		alert(id);
 		$.ajax({
 			url:"${pageContext.request.contextPath }/register/idcheck",
 			type: 'POST',
-			dataType: "json",
 			data: {
 				id : id
 			},
 			success:function(data){
-				//alert(data);
-				if(data == 0){
-					$("#idChecked").text("사용가능한 아이디 입니다.").css({
-						display: "block",
-						color : "blue",
-						margin : "10px"
-					});
-					isIdChecked = true;
-					$("#pw").focus();
-				}else if(data == 1) {
-					$("#idChecked").text("이미 가입된 아이디 입니다.").css({
-						display: "block",
-						color : "red",
-						margin : "10px"
-					});
-					isIdChecked = false;
-					$("#id").focus();
-				}else if(data == 2){
-					$("#idChecked").text("필수 정보 입니다.").css({
-						display: "block",
-						color : "red",
-						margin : "10px"
-					});
-					isIdChecked = false;
-					$("#id").focus();
-				}else if(data = 3){
-					$("#idChecked").text("아이디는 4~12자의 영문 대소문자와 숫자로만 입력 가능합니다.").css({
-						display: "block",
-						color : "red",
-						margin : "10px"
-					});
-					isIdChecked = false;
-					$("#id").focus();
-				}
+				console.log(data);
+				if(data.id == 0){
+					alert("ok");
+				}else{
+					alert("no");
+				};
 			},
 			error:function(request, status, error){
-				console.log("error: "+error);
+				alert("error: "+error);
 			}
 		})
 	}
-	
-	//중복체크 후 id 변경 방지
-	$('#id').click(function () {
-		isIdChecked = false;
-		$('#idChecked').hide();
-	})
-	
 	//비밀번호 체크
 	function checkpw(){
-		var passwordRule = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,16}$/;
 		var pw = $('#pw').val();
 		var pw2 = $('#checkPw').val();
-		
-		if(!passwordRule.test(pw)){
-			$('#pw_rule_check').html("영문자,숫자,특수문자를 하나이상 포함하여 8~16자로 입력하세요")
-		}else if(passwordRule.test(pw)){
-			$('#pw_rule_check').empty();
-		}
 		if(pw==pw2){
 			$('#pw_check').empty();
-		}else if (pw2 != "" && pw!=pw2){
-			$('#pw_check').html("비밀번호가 일치하지 않습니다.");
 		}
 	}
 	function checkpw2(){
@@ -233,16 +146,15 @@
 		}
 	}
 	
-	//email 도메인 셀렉트 이벤트
+	//email 선택
  	$('#domain').change(function () {
 		$('#domain option:selected').each(function(){
 			if($(this).val()=='custom'){
-				$('#emailDomain').val('@');
-				$('#emailDomain').attr('disabled', false);
-				$('#emailDomain').focus();
+				$('#email2').val('');
+				$('#email2').attr('disabled', false);
 			}else{
-				$('#emailDomain').val($(this).val());
-				$('#emailDomain').attr("disabled", true);
+				$('#email2').val($(this).text());
+				$('#email2').attr("disabled", true);
 			}
 		})
 	})
@@ -260,23 +172,12 @@
       });
      });
 	
-	//유효성 검사
 	function validate(){
-		//id 중복 체크 안했으면 alert 띄움
-		//alert("중복체크 여부: "+isIdChecked);
-		if(!isIdChecked){
-			alert("아이디 중복 체크를 해주세요");
-			return false;
-		}
-		
 		//email 결합
-		//email = $('#emailId').val();
-		//email += '@' + $('#emailDomain').val();
-		//alert(email);
-		//$('#email').val(email);
-		var frm = document.registerForm;
-		frm.email.value = frm.emailId.value+""+frm.emailDomain.value;
-		alert(frm.email.value);
+		email = $('#email').val();
+		email += '@' + $('#email2').val();
+		alert(email);
+		$('#email').val(email);
 	}
 	
  	

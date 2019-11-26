@@ -130,7 +130,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-8">
-		<label class="btn"> <input type="checkbox" name="agree">
+		<label class="btn"> <input type="checkbox" id="agree" name="agree">
 			동의합니다.
 		</label>
 	</div>

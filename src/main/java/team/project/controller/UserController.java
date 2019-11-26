@@ -53,25 +53,54 @@ public class UserController {
 		try {
 			userSer.register(regReq);
 			
-		}catch(AlreadyExistingEmailException e) {
-			errors.rejectValue("email", "duplicate", "이미 가입된 이메일 입니다.");
-			mv.setViewName("/register/signUp");
-			return mv;
-			
 		}catch(AlreadyExistingIdException e) {
 			errors.rejectValue("id", "duplicate", "이미 가입된 아이디 입니다.");
+			mv.setViewName("/register/signUp");
+			return mv;
+		}catch(AlreadyExistingEmailException e) {
+			errors.rejectValue("email", "duplicate", "이미 가입된 이메일 입니다.");
 			mv.setViewName("/register/signUp");
 			return mv;
 		}
 		mv.setViewName("/register/signOk");
 		return mv;
 	}
+	//id 중복 체크(ajax)
+	@RequestMapping(value="register/idcheck", method=RequestMethod.POST)
+	@ResponseBody
+	public int idcheck(RegisterRequest regReq, Errors errors)throws Exception {
+		String id = new RegisterRequestValidator().idcheck(regReq, errors);
+		System.out.println(id);
+		if(errors.hasErrors()) {
+			if(errors.getFieldError("id").getCode().equals("required")) {
+				return 2;
+			}else if(errors.getFieldError("id").getCode().equals("bad")) {
+				System.out.println("bad");
+				return 3;
+			}
+		}
+		int idchecked = userSer.idcheck(id);
+		System.out.println(idchecked);
+		return idchecked;
+	}
+	
 	//id 중복 체크
-//	@RequestMapping(value="/idcheck", method=RequestMethod.GET)
+//	@RequestMapping(value="register/idcheck", method=RequestMethod.GET)
 //	@ResponseBody
-//	public ModelAndView idcheck(@RequestParam("id")String id, Errors errors)throws Exception {
-//		new RegisterRequestValidator().validate(id, errors);
-//		return 
-//	}
+//	public ModelAndView idcheck(RegisterRequest regReq, Errors errors)throws Exception {
+//		String id = new RegisterRequestValidator().idcheck(regReq, errors);
+//		System.out.println(id);
+//		ModelAndView mv = new ModelAndView();
+//		if(errors.hasErrors()) {
+//			System.out.println("에러::::");
+//			System.out.println(errors.getFieldError("id").getDefaultMessage());
+//			return mv;
+//		}
+//		int idchecked = userSer.idcheck(id);
+//		System.out.println(idchecked);
+//		mv.addObject("id", idchecked);
+//		mv.setViewName("/register/signUp");
+//		return mv;
+//		}
 	
 }

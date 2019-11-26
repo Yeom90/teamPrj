@@ -28,6 +28,13 @@ public class UserServiceImp implements UserService{
 		}
 		userDAO.insertUser(regReq);
 	}
+
+	@Override
+	public int idcheck(String id) throws Exception {
+		int cnt = userDAO.idcheck(id);
+		return cnt;
+	}
+	
 	
 	
 }

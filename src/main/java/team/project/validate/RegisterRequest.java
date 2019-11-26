@@ -6,6 +6,11 @@ public class RegisterRequest {
 	private String name;
 	private String pw;
 	private String checkPw;
+	private String birth;
+	private String postcode;
+	private String address;
+	private String detailAddress;
+	private String extraAddress;
 	private String agree;
 	
 	public boolean isPwEqualToCheckPw() {
@@ -50,6 +55,46 @@ public class RegisterRequest {
 
 	public void setCheckPw(String checkPw) {
 		this.checkPw = checkPw;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+
+	public String getExtraAddress() {
+		return extraAddress;
+	}
+
+	public void setExtraAddress(String extraAddress) {
+		this.extraAddress = extraAddress;
 	}
 
 	public String getAgree() {

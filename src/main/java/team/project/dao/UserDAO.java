@@ -19,5 +19,8 @@ public class UserDAO extends AbstractDAO{
 	public void insertUser(RegisterRequest regReq) {
 		insert("user.register", regReq);
 	}
+	public int idcheck(String id) {
+		return (int) selectOne("user.idcheck", id);
+	}
 	
 }
